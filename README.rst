@@ -9,6 +9,10 @@ quadrature
 A python module for computing the quadratures (integrals) of homogenous polynomials of arbitrary order over 
 any simplices in any dimension. 
 
-Some documentation is available at `dzhelil.info/quadrature <dzhelil.info/quadrature>`_.
+Documentation and examples are available at `dzhelil.info/quadrature <http://dzhelil.info/quadrature>`_.
+
+To install run ::
+
+   pip install --upgrade git+git://github.com/drufat/quadrature.git
 
 
