@@ -1,1 +1,386 @@
-Hello World!
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Computing Quadratures of Polynomial Functions over k-Simplices \(\triangle^k\) in \(\mathbb{R}^n\) &mdash; quadrature  documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="quadrature  documentation" href="#" />
+    <link rel="next" title="API" href="symbolic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="symbolic.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">quadrature  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="computing-quadratures-of-polynomial-functions-over-k-simplices-in">
+<h1>Computing Quadratures of Polynomial Functions over k-Simplices <span class="math">\(\triangle^k\)</span> in <span class="math">\(\mathbb{R}^n\)</span><a class="headerlink" href="#computing-quadratures-of-polynomial-functions-over-k-simplices-in" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="symbolic.html">API</a></li>
+</ul>
+</div>
+<p>Suppose we are given a k-Simplex <span class="math">\(\triangle^k\)</span> in <span class="math">\(\mathbb{R}^n\)</span></p>
+<div class="math">
+\[\triangle^k=\left\{ \sum_{i=0}^{k}\lambda_{i}\mathbf{x}_{i}\vert\lambda_{i}\ge0,\,0\leq i\le k,\,\sum_{i=0}^{k}\lambda_{i}=1\right\}\]</div>
+<p>where <span class="math">\(\mathbf{x}_i\)</span> represents the i<sup>th</sup> vertex of the simplex.</p>
+<div class="math">
+\[\begin{split}\mathbf{x}_{1}=\left(\begin{array}{c}
+x_{1}\\
+y_{1}\\
+z_{1}\\
+\vdots
+\end{array}\right)\qquad\mathbf{x}_{2}=\left(\begin{array}{c}
+x_{2}\\
+y_{2}\\
+z_{2}\\
+\vdots
+\end{array}\right)\dots\qquad\mathbf{x}_{i}=\left(\begin{array}{c}
+x_{i}\\
+y_{i}\\
+z_{i}\\
+\vdots
+\end{array}\right)\dots\qquad\mathbf{x}_{k}=\left(\begin{array}{c}
+x_{k}\\
+y_{k}\\
+z_{k}\\
+\vdots
+\end{array}\right)\end{split}\]</div>
+<p>We are interested in finding an explicit expression for the quadrature of a homogeneous polynomial
+over such a simplex:</p>
+<div class="math">
+\[\int_{\triangle_{k}}x^{\alpha}y^{\beta}\dots\]</div>
+<p>and the moments, which are the above expression divided by the volume of the simplex:</p>
+<div class="math">
+\[\langle x^\alpha y^\beta \dots \rangle = \frac{1}{\text{vol} (\triangle_k)}  \int_{\triangle_{k}}x^{\alpha}y^{\beta}\dots\]</div>
+<p>We have implemented in python a simple algorithm that computes exactly the above expressions:</p>
+<dl class="function">
+<dt id="quadrature.nCk">
+<tt class="descclassname">quadrature.</tt><tt class="descname">nCk</tt><big>(</big><em>n</em>, <em>k</em><big>)</big><a class="headerlink" href="#quadrature.nCk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the binomial coefficients <span class="math">\(\binom nk = \frac{n!}{k!(n-k)!}\)</span></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nCk</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nCk</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nCk</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[[</span><span class="n">nCk</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span> <span class="o">==</span> <span class="p">[</span>
+<span class="gp">... </span>         <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>      <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span>   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>                              <span class="p">]</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="quadrature.quadrature">
+<tt class="descclassname">quadrature.</tt><tt class="descname">quadrature</tt><big>(</big><em>term</em>, <em>verts</em><big>)</big><a class="headerlink" href="#quadrature.quadrature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the quadrature of a homogenous polynomial given by term=&#8217;xxy&#8217;
+over the vertices verts=(0,1,2) of a simplex.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">quadrature</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">([((), 1)], Fraction(1, 1))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quadrature</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">([(((&#39;x&#39;, 0),), 1), (((&#39;x&#39;, 1),), 1)], Fraction(1, 2))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quadrature</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">([(((&#39;x&#39;, 0),), 1), (((&#39;x&#39;, 1),), 1), (((&#39;x&#39;, 2),), 1)], Fraction(1, 3))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quadrature</span><span class="p">(</span><span class="s">&#39;xx&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="p">(</span>
+<span class="gp">... </span>   <span class="p">[(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quadrature</span><span class="p">(</span><span class="s">&#39;xy&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="o">==</span> <span class="p">(</span>
+<span class="gp">... </span>   <span class="p">[(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>     <span class="p">(((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)],</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="description-of-algorithm">
+<h1>Description of Algorithm<a class="headerlink" href="#description-of-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>Our algorithm is general, but for simplicity we will just demonstrate it for the specific case of a triangle
+in two dimensions. Assume you have a triangle in the plane defined by its three vertices at
+<span class="math">\((x_0,y_0)\)</span>, <span class="math">\((x_1,y_1)\)</span>, and <span class="math">\((x_2,y_2)\)</span> - it is a 2-simplex so <span class="math">\(k=2\)</span>. We will compute
+the moment of the q-homoqenous polynomial <span class="math">\(\langle xy \rangle\)</span> with <span class="math">\(q=2\)</span>.</p>
+<p>(<a class="reference external" href="./fig/triangle.py">Source code</a>, <a class="reference external" href="./fig/triangle.png">png</a>, <a class="reference external" href="./fig/triangle.hires.png">hires.png</a>, <a class="reference external" href="./fig/triangle.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/triangle.png" src="_images/triangle.png" />
+</div>
+<p>The inputs to the algorithm are two tuples - the first is <span class="math">\(\text{term}=(x,y)\)</span> describing the polynomial and the
+other is <span class="math">\(\text{verts}=(0,1,2)\)</span> describing the labels for the vertices. With this notation, the orders of the simplex
+<span class="math">\(k\)</span> and the degree of the polynomial <span class="math">\(q\)</span> are given by</p>
+<div class="math">
+\[\begin{split}k &amp;= \text{len}(\text{verts})-1 = 2 \\
+q &amp;= \text{len}(\text{term}) = 2\\\end{split}\]</div>
+<p>Now take all the permutations of the <span class="math">\(\text{term}\)</span> tuple.</p>
+<div class="math">
+\[P = \mathcal{P}(\text{term}) = (xy, yx)\]</div>
+<p>Compute all the combinations (with repetitions allowed) of size <span class="math">\(q=2\)</span> of the coordinates of the vertices</p>
+<div class="math">
+\[V = \mathcal{C}^q(\text{verts}) = (00, 01, 02, 11, 12, 22)\]</div>
+<p>Take the product of <span class="math">\(V\)</span> and <span class="math">\(P\)</span></p>
+<div class="math">
+\[P \times V = \left (  (xy,00), (xy,01),(xy,02),(xy,11),(xy,12),(xy,22),
+                      (yx,00),(yx,01),(yx,02),(yx,11),(yx,12),(yx,22) \right)\]</div>
+<p>For each element in the tuple zip together the variable with the simplex vertices (e.g. <span class="math">\((xy,00) \mapsto x_0y_0, \quad (xy,01) \mapsto x_0y_1\)</span> and so on):</p>
+<div class="math">
+\[\text{zip}(P \times V) = \left (  x_0 y_0, x_0 y_1, x_0 y_2, x_1 y_1, x_1y_2, x_2y_2,
+                      y_0x_0, y_0x_1,y_0x_2,y_1x_1,y_1x_2,y_2x_2 \right)\]</div>
+<p>Treat each element as a multiplication and sum all the multiples together</p>
+<div class="math">
+\[\sum(\text{zip}(P \times V)) = \left ( 2 x_0 y_0 +   x_0 y_1 +   x_0 y_2 +
+                                         x_1 y_0 + 2 x_1 y_1 +   x_1 y_2 +
+                                         x_2 y_0 +   x_2 y_1 + 2 x_2 y_2 \right)\]</div>
+<p>Divide the result by <span class="math">\(\binom{k+q}{q} q!\)</span> to obtain the final expression</p>
+<div class="math">
+\[\frac{1}{\binom{k+q}{q} q!} \sum(\text{zip}(P \times V)) = \frac{1}{12} \left ( 2 x_0 y_0 +   x_0 y_1 +   x_0 y_2 +
+                                         x_1 y_0 + 2 x_1 y_1 +   x_1 y_2 +
+                                         x_2 y_0 +   x_2 y_1 + 2 x_2 y_2 \right)\]</div>
+<p>which is indeed what one would obtain for <span class="math">\(\langle xy \rangle\)</span> by manual calculation.</p>
+</div>
+<div class="section" id="pseudocode">
+<h1>Pseudocode<a class="headerlink" href="#pseudocode" title="Permalink to this headline">¶</a></h1>
+<p>In pseudocode the algorithm can be concisely given as:</p>
+<div class="math">
+\[\begin{split}&amp; \text{def  quadrature}(\text{term},\,\text{verts}): \\
+&amp; \qquad  k = \text{len}(\text{verts})-1 \\
+&amp; \qquad q = \text{len}(\text{term}) \\
+&amp; \qquad P = \mathcal{P}(\text{term}) \\
+&amp; \qquad V = \mathcal{C}^q(\text{verts}) \\
+&amp; \qquad \text{return} \quad \frac{1}{\binom{k+q}{q} q!} \sum(\text{zip}(P \times V))\end{split}\]</div>
+</div>
+<div class="section" id="validation">
+<h1>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h1>
+<p>To validate the algorithm we consider a triangle, a line segment, and a tetrahedron, and we compute a
+number of low order moments by integrating explicitly. The Mathematica file where all the integration is done
+is  provided <a class="reference download internal" href="_downloads/quadratures.nb"><tt class="xref download docutils literal"><span class="pre">for</span> <span class="pre">download</span> <span class="pre">here</span></tt></a>.</p>
+<div class="section" id="triangle-in">
+<h2>Triangle <span class="math">\(\triangle^2\)</span> in <span class="math">\(\mathbb{R}^2\)</span><a class="headerlink" href="#triangle-in" title="Permalink to this headline">¶</a></h2>
+<p>The moments of all the homogeneous polynomials over a triangle area given by</p>
+<div class="math">
+\[\langle x^{n}y^{m}\rangle=\frac{1}{A}\int_{\triangle}x^{n}y^{m}\,\mathbf{d}x\wedge\mathbf{d}y\]</div>
+<p>where <span class="math">\(\mathbf{d}x\wedge\mathbf{d}y\)</span> is the area form for <span class="math">\(\mathbb{R}^2\)</span>
+and <span class="math">\(A=\int_{\triangle}\mathbf{d}x\wedge\mathbf{d}y\)</span> is the total area of the triangle.</p>
+<p>For example, <span class="math">\(\langle x \rangle\)</span> and <span class="math">\(\langle y \rangle\)</span> are the
+coordinates of the center of mass of the triangle.</p>
+<p>Change of variables <span class="math">\(x,y \mapsto s,t\)</span></p>
+<div class="math">
+\[\begin{split}x   &amp;=      (1-s-t)x_{0}+sx_{1}+tx_{2}=s(x_{1}-x_{0})+t(x_{2}-x_{0}) \\
+y   &amp;=      (1-s-t)y_{0}+sy_{1}+ty_{2}=s(y_{1}-y_{0})+t(y_{2}-y_{0})\end{split}\]</div>
+<p>so that <span class="math">\((s,t)=(0,0)\)</span> corresponds to vertex <span class="math">\((x_{0},y_{0})\)</span>, <span class="math">\((s,t)=(1,0)\)</span>
+corresponds to vertex <span class="math">\((x_{1},y_{1})\)</span>, and <span class="math">\((s,t)=(0,1)\)</span> corresponds to vertex
+<span class="math">\((x_{2},y_{2})\)</span>. The area form transforms as follows:</p>
+<div class="math">
+\[\begin{split}dx\wedge dy  &amp;= \left((x_{1}-x_{0})(y_{2}-y_{0})-(x_{2}-x_{0})(y_{1}-y_{0})\right)\, ds\wedge dt \\
+             &amp;= 2A\, ds\wedge dt\end{split}\]</div>
+<p>Thus we have an explicit expression for the quadrature</p>
+<div class="math">
+\[\langle x^{n}y^{m}\rangle=2\int_{0}^{1}ds\int_{0}^{1-s}dt\left(s(x_{1}-x_{0})+t(x_{2}-x_{0})\right)^{n}\left(s(y_{1}-y_{0})+t(y_{2}-y_{0})\right)^{m}dt\]</div>
+<p>which can be evaluated by hand to obtain the first few moments:</p>
+<div class="math">
+\[\begin{split}\frac{1}{6} \left(x_{0}^{2} + x_{0} x_{1} + x_{0} x_{2} + x_{1}^{2} + x_{1} x_{2} + x_{2}^{2}\right) \\
+\frac{1}{10} \left(x_{0}^{3} + x_{0}^{2} x_{1} + x_{0}^{2} x_{2} + x_{0} x_{1}^{2} + x_{0} x_{1} x_{2} + x_{0} x_{2}^{2} + x_{1}^{3} + x_{1}^{2} x_{2} + x_{1} x_{2}^{2} + x_{2}^{3}\right) \\
+\frac{1}{12} \left(2 x_{0} y_{0} + x_{0} y_{1} + x_{0} y_{2} + x_{1} y_{0} + 2 x_{1} y_{1} + x_{1} y_{2} + x_{2} y_{0} + x_{2} y_{1} + 2 x_{2} y_{2}\right) \\
+\frac{1}{21} \left(x_{0}^{5} + x_{0}^{4} x_{1} + x_{0}^{4} x_{2} + x_{0}^{3} x_{1}^{2} + x_{0}^{3} x_{1} x_{2} + x_{0}^{3} x_{2}^{2} + x_{0}^{2} x_{1}^{3} + x_{0}^{2} x_{1}^{2} x_{2} + x_{0}^{2} x_{1} x_{2}^{2} + x_{0}^{2} x_{2}^{3} + x_{0} x_{1}^{4} + x_{0} x_{1}^{3} x_{2} + x_{0} x_{1}^{2} x_{2}^{2} + x_{0} x_{1} x_{2}^{3} + x_{0} x_{2}^{4} + x_{1}^{5} + x_{1}^{4} x_{2} + x_{1}^{3} x_{2}^{2} + x_{1}^{2} x_{2}^{3} + x_{1} x_{2}^{4} + x_{2}^{5}\right) \\\end{split}\]</div>
+<div class="math">
+\[\begin{split}\langle 1 \rangle &amp;= 1 \\
+\langle x \rangle &amp;= \frac{1}{3}( x_0 + x_1 + x_2 ) \\
+\langle x^2 \rangle &amp;= \frac{1}{6}( x_0^2 + x_0 x_1 + x_1^2 + x_0 x_2 + x_1 x_2 + x_2^2 ) \\
+\langle x^3 \rangle &amp;= \frac{1}{10}( x_0^3 + x_0^2 x_1 + x_0 x_1^2 + x_1^3 + x_0^2 x_2 + x_0 x_1 x_2 + x_1^2 x_2 + x_0 x_2^2 + x_1 x_2^2 + x_2^3 ) \\
+\langle x y \rangle  &amp;= \frac{1}{12}( 2 x_0 y_0 + x_1 y_0 + x_2 y_0 + x_0 y_1 + 2 x_1 y_1 + x_2 y_1 + x_0 y_2 + x_1 y_2 + 2 x_2 y_2 ) \\\end{split}\]</div>
+<p>Those match exactly with the results from our algorithm.</p>
+<dl class="function">
+<dt id="quadrature.test_triangle">
+<tt class="descclassname">quadrature.</tt><tt class="descname">test_triangle</tt><big>(</big><big>)</big><a class="headerlink" href="#quadrature.test_triangle" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">q</span><span class="p">(</span><span class="n">t</span><span class="p">):</span> <span class="k">return</span> <span class="n">tostr</span><span class="p">(</span><span class="n">quadrature</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/3 (x0 + x1 + x2)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xx&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/6 (x0x0 + x0x1 + x0x2 + x1x1 + x1x2 + x2x2)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xxx&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/10 (x0x0x0 + x0x0x1 + x0x0x2 + x0x1x1 + x0x1x2 + x0x2x2 + x1x1x1 + x1x1x2 + x1x2x2 + x2x2x2)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xy&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/12 (2 x0y0 + x0y1 + x0y2 + x1y0 + 2 x1y1 + x1y2 + x2y0 + x2y1 + 2 x2y2)&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="line-segment-in">
+<h2>Line Segment <span class="math">\(\triangle^1\)</span> in <span class="math">\(\mathbb{R}^2\)</span><a class="headerlink" href="#line-segment-in" title="Permalink to this headline">¶</a></h2>
+<p>The same be done for line segments defined by their endpoints
+<span class="math">\((x_0,y_0)\)</span> and <span class="math">\((x_1,y_1)\)</span>. Again the first few moments in this
+case are:</p>
+<div class="math">
+\[\begin{split}\langle 1  \rangle  &amp;= 1 \\
+\langle x  \rangle  &amp;= \frac{1}{2}(x_0 + x_1) \\
+\langle x^2 \rangle         &amp;= \frac{1}{3}(x_0^2 + x_0 x1 + x_1^2) \\
+\langle x^3 \rangle         &amp;= \frac{1}{4}(x_0^3 + x_0^2 x_1 + x_0 x_1^2 + x_1^3) \\
+\langle x y \rangle   &amp;= \frac{1}{6}(2 x_0 y_0 + x_1 y_0 + x_0 y_1 + 2 x_1 y_1) \\
+\langle x^2 y \rangle &amp;= \frac{1}{12}(3 x_0^2 y_0 + 2 x_0 x_1 y_0 + x_1^2 y_0 + x_0^2 y_1 + 2 x_0 x_1 y_1 + 3 x_1^2 y_1) \\\end{split}\]</div>
+<p>And our algorithm gives</p>
+<dl class="function">
+<dt id="quadrature.test_line_segment">
+<tt class="descclassname">quadrature.</tt><tt class="descname">test_line_segment</tt><big>(</big><big>)</big><a class="headerlink" href="#quadrature.test_line_segment" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">q</span><span class="p">(</span><span class="n">t</span><span class="p">):</span> <span class="k">return</span> <span class="n">tostr</span><span class="p">(</span><span class="n">quadrature</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/2 (x0 + x1)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xx&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/3 (x0x0 + x0x1 + x1x1)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xxx&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/4 (x0x0x0 + x0x0x1 + x0x1x1 + x1x1x1)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xy&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/6 (2 x0y0 + x0y1 + x1y0 + 2 x1y1)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xxy&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/12 (3 x0x0y0 + x0x0y1 + 2 x0x1y0 + 2 x0x1y1 + x1x1y0 + 3 x1x1y1)&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="tetrahedron-in">
+<h2>Tetrahedron <span class="math">\(\triangle^3\)</span> in <span class="math">\(\mathbb{R}^3\)</span><a class="headerlink" href="#tetrahedron-in" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+\[\begin{split}\langle 1 \rangle   &amp;= 1 \\
+\langle x \rangle  &amp;= \frac{1}{4}(x_0 + x_1 + x_2 + x_3) \\
+\langle x^2 \rangle &amp;= \frac{1}{20}(2 x_0^2 + 2 x_0 x_1 + 2 x_1^2 + 2 x_0 x_2 + 2 x_1 x_2 + 2 x_2^2 + 2 x_0 x_3 + 2 x_1 x_3 + 2 x_2 x_3 + 2 x_3^2) \\
+\langle x^3 \rangle &amp;= \frac{1}{20}(x_0^3 + x_0^2 x_1 + x_0 x_1^2 + x_1^3 + x_0^2 x_2 + x_0 x_1 x_2 + x_1^2 x_2 + x_0 x_2^2 + x_1 x_2^2 + x_2^3 + x_0^2 x_3 + x_0 x_1 x_3 + x_1^2 x_3 + x_0 x_2 x_3 + \\
+               &amp;  + x_1 x_2 x_3 + x_2^2 x_3 + x_0 x_3^2 + x_1 x_3^2 + x_2 x_3^2 + x_3^3) \\
+\langle xy \rangle  &amp;= \frac{1}{20}(2 x_0 y_0 + x_1 y_0 + x_2 y_0 + x_3 y_0 + x_0 y_1 + 2 x_1 y_1 + x_2 y_1 + x_3 y_1 + x_0 y_2 + x_1 y_2 + 2 x_2 y_2 + x_3 y_2 + x_0 y_3 + x_1 y_3 + x_2 y_3 + 2 x_3 y_3) \\\end{split}\]</div>
+<dl class="function">
+<dt id="quadrature.test_tetrahedron">
+<tt class="descclassname">quadrature.</tt><tt class="descname">test_tetrahedron</tt><big>(</big><big>)</big><a class="headerlink" href="#quadrature.test_tetrahedron" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">q</span><span class="p">(</span><span class="n">t</span><span class="p">):</span> <span class="k">return</span> <span class="n">tostr</span><span class="p">(</span><span class="n">quadrature</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/4 (x0 + x1 + x2 + x3)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xx&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/10 (x0x0 + x0x1 + x0x2 + x0x3 + x1x1 + x1x2 + x1x3 + x2x2 + x2x3 + x3x3)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xxx&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/20 (x0x0x0 + x0x0x1 + x0x0x2 + x0x0x3 + x0x1x1 + x0x1x2 + x0x1x3 + x0x2x2 + x0x2x3 + x0x3x3 + x1x1x1 + x1x1x2 + x1x1x3 + x1x2x2 + x1x2x3 + x1x3x3 + x2x2x2 + x2x2x3 + x2x3x3 + x3x3x3)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="p">(</span><span class="s">&#39;xy&#39;</span><span class="p">)</span>
+<span class="go">&#39;1/20 (2 x0y0 + x0y1 + x0y2 + x0y3 + x1y0 + 2 x1y1 + x1y2 + x1y3 + x2y0 + x2y1 + 2 x2y2 + x2y3 + x3y0 + x3y1 + x3y2 + 2 x3y3)&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Computing Quadratures of Polynomial Functions over k-Simplices <span class="math">\(\triangle^k\)</span> in <span class="math">\(\mathbb{R}^n\)</span></a></li>
+<li><a class="reference internal" href="#description-of-algorithm">Description of Algorithm</a></li>
+<li><a class="reference internal" href="#pseudocode">Pseudocode</a></li>
+<li><a class="reference internal" href="#validation">Validation</a><ul>
+<li><a class="reference internal" href="#triangle-in">Triangle <span class="math">\(\triangle^2\)</span> in <span class="math">\(\mathbb{R}^2\)</span></a></li>
+<li><a class="reference internal" href="#line-segment-in">Line Segment <span class="math">\(\triangle^1\)</span> in <span class="math">\(\mathbb{R}^2\)</span></a></li>
+<li><a class="reference internal" href="#tetrahedron-in">Tetrahedron <span class="math">\(\triangle^3\)</span> in <span class="math">\(\mathbb{R}^3\)</span></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="symbolic.html"
+                        title="next chapter">API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="symbolic.html" title="API"
+             >next</a> |</li>
+        <li><a href="#">quadrature  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
