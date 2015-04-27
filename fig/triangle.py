@@ -2,16 +2,9 @@ import matplotlib.path as mpath
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
-plt.rc('text', usetex=True)
 fig, ax = plt.subplots()
 
 Path = mpath.Path
-# path_data = [
-#     (Path.MOVETO, (0, 0)),
-#     (Path.LINETO, (1, 0)),
-#     (Path.LINETO, (0, 1)),
-#     ]
-# codes, verts = zip(*path_data)
 A = (0, 0)
 B = (1, 0)
 C = (0.9, 0.8)
