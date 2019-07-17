@@ -1,22 +1,12 @@
 language: python
 python:
     - "2.7"
-    - "3.3"
-    - "3.4"
-
-before_install:
-    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-    - chmod +x miniconda.sh
-    - ./miniconda.sh -b
-    - export PATH=${HOME}/miniconda/bin:$PATH
-    - conda update --yes conda
-    # The next couple lines fix a crash with multiprocessing on Travis and are not specific to using Miniconda
-    - sudo rm -rf /dev/shm
-    - sudo ln -s /run/shm /dev/shm
+    - "3.6"
+    - "3.7"
 
 install:
-    - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy sympy pytest
-    - python setup.py install    
+    - pip install numpy sympy pytest
+    - python setup.py develop
 
 script:
     - py.test --doctest-modules quadrature

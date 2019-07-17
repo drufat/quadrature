@@ -1,12 +1,8 @@
-Computing Quadratures of Polynomial Functions over k-Simplices :math:`\triangle^k` in :math:`\mathbb{R}^n`
-===========================================================================================================
+==========
+Quadrature
+==========
 
-Contents:
-
-.. toctree::
-    :maxdepth: 2
-
-    symbolic
+`Quadrature` is a Python module for computing the quadratures (integrals) of homogenous polynomials of arbitrary order over any simplices in any dimension.
 
 Suppose we are given a k-Simplex :math:`\triangle^k` in :math:`\mathbb{R}^n`
 
@@ -40,8 +36,7 @@ where :math:`\mathbf{x}_i` represents the i\ :sup:`th` vertex of the simplex.
     \vdots
     \end{array}\right)
 
-We are interested in finding an explicit expression for the quadrature of a homogeneous polynomial
-over such a simplex:
+We are interested in finding an explicit expression for the quadrature of a homogeneous polynomial over such a simplex:
 
 .. math::
 
@@ -54,25 +49,18 @@ and the moments, which are the above expression divided by the volume of the sim
 
 We have implemented in python a simple algorithm that computes exactly the above expressions:
 
-
 .. autofunction:: quadrature.nCk
 
 .. autofunction:: quadrature.quadrature
 
-
 Description of Algorithm
-===================================
+========================
 
-Our algorithm is general, but for simplicity we will just demonstrate it for the specific case of a triangle
-in two dimensions. Assume you have a triangle in the plane defined by its three vertices at
-:math:`(x_0,y_0)`, :math:`(x_1,y_1)`, and :math:`(x_2,y_2)` - it is a 2-simplex so :math:`k=2`. We will compute
-the moment of the q-homoqenous polynomial :math:`\langle xy \rangle` with :math:`q=2`.
+Our algorithm is general, but for simplicity we will just demonstrate it for the specific case of a triangle in two dimensions. Assume you have a triangle in the plane defined by its three vertices at :math:`(x_0,y_0)`, :math:`(x_1,y_1)`, and :math:`(x_2,y_2)` - it is a 2-simplex so :math:`k=2`. We will compute the moment of the q-homoqenous polynomial :math:`\langle xy \rangle` with :math:`q=2`.
 
 .. plot:: fig/triangle.py
 
-The inputs to the algorithm are two tuples - the first is :math:`\text{term}=(x,y)` describing the polynomial and the
-other is :math:`\text{verts}=(0,1,2)` describing the labels for the vertices. With this notation, the orders of the simplex
-:math:`k` and the degree of the polynomial :math:`q` are given by
+The inputs to the algorithm are two tuples - the first is :math:`\text{term}=(x,y)` describing the polynomial and the other is :math:`\text{verts}=(0,1,2)` describing the labels for the vertices. With this notation, the orders of the simplex :math:`k` and the degree of the polynomial :math:`q` are given by
 
 .. math::
 
@@ -125,7 +113,7 @@ Divide the result by :math:`\binom{k+q}{q} q!` to obtain the final expression
 which is indeed what one would obtain for :math:`\langle xy \rangle` by manual calculation.
 
 Pseudocode
-===========
+==========
 In pseudocode the algorithm can be concisely given as:
 
 .. math::
@@ -138,11 +126,9 @@ In pseudocode the algorithm can be concisely given as:
     & \qquad \text{return} \quad \frac{1}{\binom{k+q}{q} q!} \sum(\text{zip}(P \times V))
 
 Validation
-============
+==========
 
-To validate the algorithm we consider a triangle, a line segment, and a tetrahedron, and we compute a
-number of low order moments by integrating explicitly. The Mathematica file where all the integration is done
-is  provided :download:`for download here <quadratures.nb>`.
+To validate the algorithm we consider a triangle, a line segment, and a tetrahedron, and we compute a number of low order moments by integrating explicitly. The Mathematica file where all the integration is done is  provided :download:`for download here <quadratures.nb>`.
 
 
 Triangle :math:`\triangle^2` in :math:`\mathbb{R}^2`
@@ -157,11 +143,9 @@ The moments of all the homogeneous polynomials over a triangle area given by
 where :math:`\mathbf{d}x\wedge\mathbf{d}y` is the area form for :math:`\mathbb{R}^2`
 and :math:`A=\int_{\triangle}\mathbf{d}x\wedge\mathbf{d}y` is the total area of the triangle.
 
-For example, :math:`\langle x \rangle` and :math:`\langle y \rangle` are the
-coordinates of the center of mass of the triangle.
+For example, :math:`\langle x \rangle` and :math:`\langle y \rangle` are the coordinates of the center of mass of the triangle.
 
 Change of variables :math:`x,y \mapsto s,t`
-
 
 .. math::
 
@@ -169,9 +153,7 @@ Change of variables :math:`x,y \mapsto s,t`
     y	&=	(1-s-t)y_{0}+sy_{1}+ty_{2}=s(y_{1}-y_{0})+t(y_{2}-y_{0})
 
 
-so that :math:`(s,t)=(0,0)` corresponds to vertex :math:`(x_{0},y_{0})`, :math:`(s,t)=(1,0)`
-corresponds to vertex :math:`(x_{1},y_{1})`, and :math:`(s,t)=(0,1)` corresponds to vertex
-:math:`(x_{2},y_{2})`. The area form transforms as follows:
+so that :math:`(s,t)=(0,0)` corresponds to vertex :math:`(x_{0},y_{0})`, :math:`(s,t)=(1,0)` corresponds to vertex :math:`(x_{1},y_{1})`, and :math:`(s,t)=(0,1)` corresponds to vertex :math:`(x_{2},y_{2})`. The area form transforms as follows:
 
 .. math::
 
@@ -206,7 +188,7 @@ Those match exactly with the results from our algorithm.
 .. autofunction:: quadrature.test_triangle
 
 Line Segment :math:`\triangle^1` in :math:`\mathbb{R}^2`
----------------------------------------------------------------
+--------------------------------------------------------
 
 The same be done for line segments defined by their endpoints
 :math:`(x_0,y_0)` and :math:`(x_1,y_1)`. Again the first few moments in this
@@ -226,7 +208,7 @@ And our algorithm gives
 .. autofunction:: quadrature.test_line_segment
 
 Tetrahedron :math:`\triangle^3` in :math:`\mathbb{R}^3`
---------------------------------------------------------
+-------------------------------------------------------
 
 .. math::
     \langle 1 \rangle 	&= 1 \\
@@ -237,11 +219,4 @@ Tetrahedron :math:`\triangle^3` in :math:`\mathbb{R}^3`
     \langle xy \rangle  &= \frac{1}{20}(2 x_0 y_0 + x_1 y_0 + x_2 y_0 + x_3 y_0 + x_0 y_1 + 2 x_1 y_1 + x_2 y_1 + x_3 y_1 + x_0 y_2 + x_1 y_2 + 2 x_2 y_2 + x_3 y_2 + x_0 y_3 + x_1 y_3 + x_2 y_3 + 2 x_3 y_3) \\
 
 .. autofunction:: quadrature.test_tetrahedron
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 

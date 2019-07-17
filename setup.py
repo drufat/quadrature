@@ -1,6 +1,7 @@
-from distutils.core import setup
+from setuptools import setup
 
-setup(name='quadrature',
+setup(
+    name='quadrature',
     packages=['quadrature'],
     package_dir={'quadrature': 'quadrature'},
     description='Quadrature rules for computing polynomials over simplices in R^d',
